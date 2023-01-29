@@ -1,11 +1,15 @@
 /*
 To Do List
 
-- allow b to be negative
 - make sure delete works on a and b
+- if you hit equals it should repeat the last operation (op and b stay the same but a becomes ans)
+- click and unclick operators
 - link to keyboard
 - style
 - comment everything
+- cant start on a negative number without clearing?
+
+-
 
 */
 
@@ -98,14 +102,16 @@ const numButt = document.querySelectorAll(".number-buttons button")
             console.log('yea')
         } else if (a != "" && b === ""){ // establishes b value when a is set
             displayValue = button.id;
-            b = displayValue;
+            b = displayValue; 
             displayNow(displayValue);
             console.log ("b=",b)
+            console.log("on")
         }else if (a != "" && b != "") { // allows you to add to b value if a is set and b is started
             displayValue += button.id;
             b = displayValue;
             displayNow(displayValue);
             console.log ("b=",b)
+            
         } else displayValue += button.id; // otherwise it adds the number to display
         displayNow (displayValue);
     });
@@ -114,26 +120,32 @@ const numButt = document.querySelectorAll(".number-buttons button")
 const opButt = document.querySelectorAll(".operator-buttons button")
     opButt.forEach((button) => {
     button.addEventListener ('click', ()=> {    
-        if (ans != "" && operator === "") { // allows you to operate on answers after equals
+        if (displayValue === "" && button.id === "-") {
+             if (a != "") {
+                displayValue = button.id;
+                displayNow (displayValue);
+                b = displayValue;
+             }else {
+                displayValue = button.id;
+                displayNow (displayValue);
+             }
+             
+        } else if (ans != "" && operator === "") { // allows you to operate on answers after equals
             a = ans;
             b = "";
             ans = "";
             operator = button.id;
             console.log("new a=", a)
-        }else if (a != "" && b != "") { // allows you to string operations without pressing equals
+        } else if (a != "" && b != "") { // allows you to string operations without pressing equals
             operate (operator, a, b);
             a = ans;
             b = "";
             ans='';
             operator = button.id;
-        }
-        else if (operator != "") {
+            displayValue = '';
+        } else if (operator != "") {
             operate (operator, a, b);
-        }
-        // if (displayValue === "" && button.id === "-" || operator != '' && button.id === "-") {
-        //     displayValue = button.id;
-        //     displayNow (displayValue);
-        else if (displayValue != "") {
+        } else if (displayValue != "") {
             b = "";
             a = displayValue;
             operator = button.id;
@@ -144,29 +156,30 @@ const opButt = document.querySelectorAll(".operator-buttons button")
     });
 });
 
-//function makeSubOrMinus (){
-    // checkForNeg = displayValue.split('');
-    // checkForNeg.includes("-")
-   // switch (true) {
-    //    case displayValue === "":
-      //      return "negative";
-          //  break;
-        //case displayValue != "" && operator === "":
-            //return "minus";
-            //break;
-        //case displayValue != "" && operator != "":
-          //  return "minus";
-            //break;
-        //case displayValue
-   // }
-    
-    
-//}
+// function makeSubOrMinus (){
+//      checkForNeg = displayValue.split('');
+//      checkForNeg.includes("-")
+//     switch (true) {
+//         case displayValue === "": //lets you make a value negative
+//             return "negative";
+//             break;
+//         case displayValue != "" && operator === "": //lets you use minus as operator if 
+//             return "minus";
+//             break;
+//         case displayValue != "" && operator != "": //lets you make b value negative
+//             return "minus";
+//             break;
+// }
+// }
 
-const neg = document.querySelector("#minus");
-    neg.addEventListener ('click', () => {
-        
-     });
+// const neg = document.querySelector("#minus");
+//     neg.addEventListener ('click', () => {
+//        if (makeSubOrMinus === "negative") {
+//             displayValue = "-";
+//             displayNow(displayValue);
+//        } else if (makeSubOrMinus === "minus")
+//             operator = "-";
+//      });
 
 
 const decimal = document.querySelector("#point")
