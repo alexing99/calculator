@@ -2,9 +2,8 @@
 To Do List
 
 - allow b to be negative
-- only one decimal point 
-- round 
 - fix floating point 
+- make it so when you type a number after equals it resets
 - link to keyboard
 - style
 
@@ -13,20 +12,35 @@ To Do List
 
 
 function add (a,b){
-    return Number(a) + Number(b);
+    let fixed = Number(a) + Number(b);
+    if (fixed % 1 === 0) { return fixed;
+    } else return checkDecimals (fixed);
 };
 
 function subtract (a,b){
-    return a - b;
+    let fixed = a - b;
+    if (fixed % 1 === 0) { return fixed;
+    } else return checkDecimals (fixed);
 };
 
 function multiply (a,b) {
-    return a * b;
+    let fixed = a * b;
+    if (fixed % 1 === 0) { return fixed;
+    } else return checkDecimals (fixed);
 };
 
 function divide (a,b) {
-    return a / b;
+    let fixed = a / b;
+    if (fixed % 1 === 0) { return fixed;
+    } else return checkDecimals (fixed);
 };
+
+function checkDecimals (value) {
+    const deciPlaces = value.toString().split(".");
+    if (deciPlaces[1].length > 10) {
+        return value.toFixed(10);
+    } else return value;
+}
 
 function operate (operator, a, b) {
     if (operator === "/" && b === "0") {
@@ -71,8 +85,8 @@ const numButt = document.querySelectorAll(".number-buttons button")
     numButt.forEach((button) => {
     button.addEventListener ('click', ()=> {    
         if (a != ""){
-            b += button.id;
-            displayValue = b;
+            displayValue += button.id;
+            b = displayValue;
             displayNow(displayValue);
             console.log ("b=",b)
         } else displayValue += button.id;
@@ -93,11 +107,31 @@ const opButt = document.querySelectorAll(".operator-buttons button")
             b = "";
             a = displayValue;
             operator = button.id;
+            displayValue = "";
             console.log ("a=", a)
             console.log ("op=", operator)
         }
     });
 });
+
+const decimal = document.querySelector("#point")
+    decimal.addEventListener ('click', () => {
+        checkForDeci = displayValue.split('');
+        console.log (checkForDeci)
+        if (checkForDeci.includes (".")){
+            displayValue = displayValue;
+        } else if (displayValue == "") {
+            displayValue = "0."
+            displayNow(displayValue);
+        } else if (a != ""){
+            b += ".";
+            displayValue = b;
+            displayNow(displayValue);
+        } else {
+            displayValue += ".";
+            displayNow(displayValue);
+        }
+    }); 
 
 const clear = document.querySelector("#clear")
     clear.addEventListener ('click', () => {
@@ -120,5 +154,6 @@ const backspace = document.querySelector("#delete")
 const equals = document.querySelector("#equals")
     equals.addEventListener ('click', () => {
         operate (operator, a, b);
+       // b = '';
     });
 
