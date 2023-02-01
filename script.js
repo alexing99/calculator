@@ -1,20 +1,10 @@
 /*
 To Do List
-
-- make sure delete works on a and b
-- if you hit equals it should repeat the last operation (op and b stay the same but a becomes ans)
-- click and unclick operators
+- click and unclick operators and change color
+- hover effect on buttons
 - link to keyboard
 - style
-- comment everything
-- cant start on a negative number without clearing?
-
--
-
 */
-
-
-
 function add (a,b){
     let fixed = Number(a) + Number(b);
     if (fixed % 1 === 0) { return fixed;
@@ -39,20 +29,19 @@ function divide (a,b) {
     } else return checkDecimals (fixed);
 };
 
-function checkDecimals (value) {
+function checkDecimals (value) { //checks to see if more than 10 decimal places then rounds
     const deciPlaces = value.toString().split(".");
     if (deciPlaces[1].length > 10) {
         return value.toFixed(10);
     } else return value;
 }
 
-function operate (operator, a, b) {
-    if (operator === "/" && b === "0") {
+function operate (operator, a, b) { 
+    if (operator === "/" && b === "0") { // doesn't let you divide by 0
         displayValue = "NO WAY BUDDY!"
-        displayNow (displayValue)
-        b = '';
+        displayNow (displayValue) 
     } else 
-    switch (true) {
+    switch (true) { // chooses which operation to run based on what the current operator is
         case operator === "/":
             displayValue = divide (a, b);
             displayNow (displayValue);
@@ -75,7 +64,7 @@ function operate (operator, a, b) {
     }
     ans = displayValue;
     console.log ("ans=", ans);
-    b = '';
+    b = '';  // resets b so you can string operations or operate on last answer
 };
 
 let displayValue = "";
@@ -84,12 +73,12 @@ let a = "";
 let b = "";
 let ans = "";
 
-function displayNow(content) {
+function displayNow(content) { // displays whatever value is in parameter
     const display = document.querySelector(".display") 
     display.textContent = content;  
 };
 
-const numButt = document.querySelectorAll(".number-buttons button")
+const numButt = document.querySelectorAll(".number-buttons button") // selects all number buttons
     numButt.forEach((button) => {
     button.addEventListener ('click', ()=> {    
         if (ans != "") { //clears calc if already answer and no new op
@@ -97,110 +86,84 @@ const numButt = document.querySelectorAll(".number-buttons button")
             b = "";
             operator = "";
             ans = "";
-            displayValue = button.id;
+            displayValue = button.id; 
             displayNow(displayValue);
-            console.log('yea')
         } else if (a != "" && b === ""){ // establishes b value when a is set
             displayValue = button.id;
-            b = displayValue; 
+            b = displayValue; // sets b
             displayNow(displayValue);
             console.log ("b=",b)
             console.log("on")
         }else if (a != "" && b != "") { // allows you to add to b value if a is set and b is started
-            displayValue += button.id;
-            b = displayValue;
+            displayValue += button.id; // cats digits to display
+            b = displayValue; // cats b value as you type it
             displayNow(displayValue);
             console.log ("b=",b)
             
-        } else displayValue += button.id; // otherwise it adds the number to display
+        } else displayValue += button.id; // otherwise it adds the number to display (like if first input)
         displayNow (displayValue);
     });
 });
 
-const opButt = document.querySelectorAll(".operator-buttons button")
+const opButt = document.querySelectorAll(".operator-buttons button") // selects for all operator buttons
     opButt.forEach((button) => {
     button.addEventListener ('click', ()=> {    
-        if (displayValue === "" && button.id === "-") {
-             if (a != "") {
+        if (displayValue === "" && button.id === "-") { // lets you use subtract button as a negative
+             if (a != "") {  // lets you set b value as negative (bc a is set only after you select an operator)
                 displayValue = button.id;
                 displayNow (displayValue);
                 b = displayValue;
              }else {
-                displayValue = button.id;
+                displayValue = button.id; // lets you set a value as negative
                 displayNow (displayValue);
              }
              
         } else if (ans != "" && operator === "") { // allows you to operate on answers after equals
             a = ans;
-            b = "";
-            ans = "";
+            b = ""; // b needs to be reset in order to make new b
+            ans = ""; // not really sure but it doesnt work without this
             operator = button.id;
             console.log("new a=", a)
+            console.log("op=",operator)
+            displayValue = ''; // lets you make the new b value negative
         } else if (a != "" && b != "") { // allows you to string operations without pressing equals
-            operate (operator, a, b);
-            a = ans;
-            b = "";
-            ans='';
+            operate (operator, a, b); // operates before you add another operation
+            a = ans; // same reason as above
+            b = ""; // same reason as above
+            ans=""; // ans needs to be reset bc 
             operator = button.id;
-            displayValue = '';
-        } else if (operator != "") {
-            operate (operator, a, b);
-        } else if (displayValue != "") {
+            displayValue = ''; // needs to be reset so u can make new b negative or 0. a decimal
+        } else if (displayValue != "") { // normal scenario where by pressing an operator after inputting a number it sets a and operator
             b = "";
             a = displayValue;
             operator = button.id;
             displayValue = "";
             console.log ("a=", a)
-            console.log ("op=", operator)
+            console.log ("op=", operator);
         }
     });
 });
 
-// function makeSubOrMinus (){
-//      checkForNeg = displayValue.split('');
-//      checkForNeg.includes("-")
-//     switch (true) {
-//         case displayValue === "": //lets you make a value negative
-//             return "negative";
-//             break;
-//         case displayValue != "" && operator === "": //lets you use minus as operator if 
-//             return "minus";
-//             break;
-//         case displayValue != "" && operator != "": //lets you make b value negative
-//             return "minus";
-//             break;
-// }
-// }
-
-// const neg = document.querySelector("#minus");
-//     neg.addEventListener ('click', () => {
-//        if (makeSubOrMinus === "negative") {
-//             displayValue = "-";
-//             displayNow(displayValue);
-//        } else if (makeSubOrMinus === "minus")
-//             operator = "-";
-//      });
-
-
-const decimal = document.querySelector("#point")
+const decimal = document.querySelector("#point") // selects point button
     decimal.addEventListener ('click', () => {
-        checkForDeci = displayValue.split('');
-        if (checkForDeci.includes (".")){
+        checkForDeci = displayValue.split(''); // creates array of all digits after a decimal
+        if (checkForDeci.includes (".")){ // wont let you add more than one decimal
             displayValue = displayValue;
-        } else if (displayValue === '' || displayValue === "-") {
-            displayValue += "0."
+        } else if (displayValue === '' || displayValue === "-") {// lets you make a or b values 0. or -0.
+            displayValue += "0."    
             displayNow(displayValue);
-        } else if (a != ""){
+            if (a != "") b = displayValue; // updates b if b starts with decimal
+        } else if (a != ""){ // lets you add a decimal in the middle of a b value
             b += ".";
-            displayValue = b;
+            displayValue = b; // updates b with decimal
             displayNow(displayValue);
-        } else {
+        } else { // lets you add a decimal in the middle of an a value
             displayValue += ".";
             displayNow(displayValue);
         }
     }); 
 
-const clear = document.querySelector("#clear")
+const clear = document.querySelector("#clear") // clears calc of all values and display
     clear.addEventListener ('click', () => {
         displayValue = "";
         displayNow("");  
@@ -210,18 +173,21 @@ const clear = document.querySelector("#clear")
         ans = "";
     });
 
-const backspace = document.querySelector("#delete")
+const backspace = document.querySelector("#delete") // deletes last digit from display
     backspace.addEventListener ('click', () => {
         displayValue = displayValue.slice(0, -1);
-        if (b != '') {
+        if (b != '') { // lets you delete if on b value
             b = displayValue;
         }
         displayNow(displayValue);
     });
 
-const equals = document.querySelector("#equals")
-    equals.addEventListener ('click', () => {
-        b = displayValue;
+const equals = document.querySelector("#equals") // operates if a, b, and operator have values
+    equals.addEventListener ('keydown', (event)=> {
+
+    })
+    equals.addEventListener ('click', () => {       
+        b = displayValue; // sets b for operation
         operate (operator, a, b);
         operator = '';
     });
