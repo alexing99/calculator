@@ -1,12 +1,8 @@
 .content {
     display: flex;
-    align-items: center;
     justify-content: center;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    
-
+    align-items: center;
+    height: 100vh;
 }
 .calculator {
     display: flex;
@@ -65,11 +61,11 @@ button {
 }
 
 .number-buttons button:hover {
-    background-color: rgb(101, 34, 119);
+    background-color: rgba(101, 34, 119, 0.744);
 }
 
 #point:hover {
-    background-color: rgb(101, 34, 119);
+    background-color: rgba(101, 34, 119, 0.736);
 }
 
 .operator-buttons button:hover {

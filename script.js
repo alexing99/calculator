@@ -1,9 +1,7 @@
 /*
 To Do List
 - click and unclick operators and change color
-- hover effect on buttons
 - link to keyboard
-- style
 */
 function add (a,b){
     let fixed = Number(a) + Number(b);
