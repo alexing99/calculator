@@ -38,7 +38,7 @@ function checkDecimals (value) { //checks to see if more than 10 decimal places 
 
 function operate (operator, a, b) { 
     if (operator === "/" && b === "0") { // doesn't let you divide by 0
-        displayValue = "NO WAY BUDDY!"
+        displayValue = "NO WAY!"
         displayNow (displayValue) 
     } else 
     switch (true) { // chooses which operation to run based on what the current operator is
@@ -140,6 +140,8 @@ const opButt = document.querySelectorAll(".operator-buttons button") // selects 
             displayValue = "";
             console.log ("a=", a)
             console.log ("op=", operator);
+            button.id.style.backgroundColor = "red";
+            
         }
     });
 });
