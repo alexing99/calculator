@@ -1,6 +1,8 @@
 /*
 To Do List
 - link to keyboard
+- make text shrink or wrap when you type a lot of numbers
+- make it look nice on safari and phone (flex better)
 */
 function add (a,b){
     let fixed = Number(a) + Number(b);
