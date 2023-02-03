@@ -1,6 +1,5 @@
 /*
 To Do List
-- click and unclick operators and change color
 - link to keyboard
 */
 function add (a,b){
@@ -61,7 +60,6 @@ function operate (operator, a, b) {
             break;
     }
     ans = displayValue;
-    console.log ("ans=", ans);
     b = '';  // resets b so you can string operations or operate on last answer
 };
 
@@ -90,16 +88,13 @@ const numButt = document.querySelectorAll(".number-buttons button") // selects a
             displayValue = button.id;
             b = displayValue; // sets b
             displayNow(displayValue);
-            console.log ("b=",b)
-            console.log("on")
+            document.getElementById(operator).style.backgroundColor = "";
         }else if (a != "" && b != "") { // allows you to add to b value if a is set and b is started
             displayValue += button.id; // cats digits to display
             b = displayValue; // cats b value as you type it
             displayNow(displayValue);
-            console.log ("b=",b)
-            
         } else displayValue += button.id; // otherwise it adds the number to display (like if first input)
-        displayNow (displayValue);
+            displayNow (displayValue);
     });
 });
 
@@ -121,9 +116,8 @@ const opButt = document.querySelectorAll(".operator-buttons button") // selects 
             b = ""; // b needs to be reset in order to make new b
             ans = ""; // not really sure but it doesnt work without this
             operator = button.id;
-            console.log("new a=", a)
-            console.log("op=",operator)
             displayValue = ''; // lets you make the new b value negative
+            document.getElementById(button.id).style.backgroundColor = "red";
         } else if (a != "" && b != "") { // allows you to string operations without pressing equals
             operate (operator, a, b); // operates before you add another operation
             a = ans; // same reason as above
@@ -131,14 +125,17 @@ const opButt = document.querySelectorAll(".operator-buttons button") // selects 
             ans=""; // ans needs to be reset bc 
             operator = button.id;
             displayValue = ''; // needs to be reset so u can make new b negative or 0. a decimal
+            document.getElementById(button.id).style.backgroundColor = "red";
+        } else if (b === "" && operator != "") { //lets you change your mind about operator
+            document.getElementById(operator).style.backgroundColor = "";
+            operator = button.id;
+            document.getElementById(button.id).style.backgroundColor = "red";
         } else if (displayValue != "") { // normal scenario where by pressing an operator after inputting a number it sets a and operator
             b = "";
             a = displayValue;
             operator = button.id;
             displayValue = "";
-            console.log ("a=", a)
-            console.log ("op=", operator);
-            button.id.style.backgroundColor = "red";
+            document.getElementById(button.id).style.backgroundColor = "red";
             
         }
     });
@@ -169,8 +166,10 @@ const clear = document.querySelector("#clear") // clears calc of all values and 
         displayNow("");  
         a = "";
         b = "";
+        document.getElementById(operator).style.backgroundColor = "";
         operator = "";
         ans = "";
+        
     });
 
 const backspace = document.querySelector("#delete") // deletes last digit from display
@@ -183,12 +182,8 @@ const backspace = document.querySelector("#delete") // deletes last digit from d
     });
 
 const equals = document.querySelector("#equals") // operates if a, b, and operator have values
-    equals.addEventListener ('keydown', (event)=> {
-
-    })
     equals.addEventListener ('click', () => {       
         b = displayValue; // sets b for operation
         operate (operator, a, b);
         operator = '';
     });
-
