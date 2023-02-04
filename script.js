@@ -2,8 +2,8 @@
 To Do List
 - link to keyboard
 - make text shrink or wrap when you type a lot of numbers
-- make it look nice on safari and phone (flex better)
 */
+
 function add (a,b){
     let fixed = Number(a) + Number(b);
     if (fixed % 1 === 0) { return fixed;
@@ -189,3 +189,17 @@ const equals = document.querySelector("#equals") // operates if a, b, and operat
         operate (operator, a, b);
         operator = '';
     });
+function changeSize() {
+    displayArr = displayValue.split('');
+    if (displayArr.length() > 10) {
+        document.getElementsByClassName("display").style.fontSize = "small";
+    console.log('works')
+    }
+}
+
+document.getElementsByClassName("display").style.fontSize = "small";
+
+changeSize ();
+
+console.log(displayValue, displayValue.length())
+console.log("hss")
