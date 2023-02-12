@@ -1,9 +1,3 @@
-/*
-To Do List
-- link to keyboard
-- make text shrink or wrap when you type a lot of numbers
-*/
-
 function add (a,b){
     let fixed = Number(a) + Number(b);
     if (fixed % 1 === 0) { return fixed;
@@ -196,10 +190,3 @@ function changeSize() {
     console.log('works')
     }
 }
-
-document.getElementsByClassName("display").style.fontSize = "small";
-
-changeSize ();
-
-console.log(displayValue, displayValue.length())
-console.log("hss")

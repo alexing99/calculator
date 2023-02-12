@@ -108,7 +108,5 @@ button {
     background-color: beige;
     margin-bottom: 15px;
     font-size: 50px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-x: auto;
 }
